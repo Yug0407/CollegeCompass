@@ -25,13 +25,19 @@ const userSchema = new mongoose.Schema({
     cgpa : {
         type: String,
     },
-    skills : {  
-        type: String
-    },
+    skills : [
+        {
+            name : { type: String },
+            category : { type: String }
+        }
+    ],
     interests : {
         type : String
     },
     achievements : {
+        type : String
+    },
+    collegePlaceId : {
         type : String
     }
 }, { timestamps: true });
