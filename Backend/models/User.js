@@ -28,8 +28,15 @@ const userSchema = new mongoose.Schema({
     skills : [
         {
             name : { type: String },
-            category : { type: String }
+            category : { type: String },
         }
+    ],
+    skillRatings: [
+    {
+      skillName: String,
+      level: Number,
+      lastUpdated: { type: Date, default: Date.now },
+    }
     ],
     interests : {
         type : String
@@ -39,7 +46,13 @@ const userSchema = new mongoose.Schema({
     },
     collegePlaceId : {
         type : String
-    }
+    },
+    aiRecommendations: {
+    internships: String,
+    skills: String,
+    roadmap: String,
+    generatedAt: Date
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

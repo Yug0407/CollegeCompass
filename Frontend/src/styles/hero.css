@@ -1,0 +1,132 @@
+/* ================= HERO ANIMATION ================= */
+
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  0% { opacity: 0; transform: translateY(-40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes smoothZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: smoothZoom 10s ease-in-out alternate infinite;
+}
+
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Content */
+.hero-content p {
+  color: rgba(255,255,255,.9);
+  font-size: 18px;
+  margin-bottom: 30px;
+  animation: fadeUp .9s ease forwards;
+}
+
+.hero-content h1 {
+  color: white;
+  font-size: 56px;
+  line-height: 60px;
+  font-weight: 800;
+  margin-bottom: 15px;
+  animation: fadeDown .8s ease forwards;
+}
+
+
+.hero-content h1 span {
+  opacity: 0.9;
+}
+
+.hero-content p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+/* Pill input */
+.hero-input {
+  display: flex;
+  background: white;
+  border-radius: 40px;
+  padding: 6px;
+  height: 56px;
+  max-width: 480px;
+  margin: auto;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  transform: scale(.8);
+  animation: fadeUp .9s ease forwards;
+  animation-delay: .4s;
+}
+
+
+.hero-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding-left: 20px;
+  font-size: 15px;
+}
+
+.hero-input button {
+  border: none;
+  background: #ffd84e;
+  padding: 0 24px;
+  border-radius: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-input button:hover {
+  background: #fbbf24;
+}
+
+.hero-input button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  background: rgba(255,255,255,.4);
+  transform: scale(0);
+  opacity: 0;
+  transition: .3s;
+}
+
+.hero-input button:hover::after {
+  transform: scale(1);
+  opacity: 1;
+}

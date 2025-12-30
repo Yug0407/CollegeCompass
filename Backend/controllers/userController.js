@@ -62,48 +62,81 @@ exports.recommend = async (req, res) => {
   try {
     const data = req.body;
 
-    // 1. SEMANTIC FORMATTING: 
-    // We convert the array [{name: "React", category: "Web Dev"}] 
-    // into a string Gemini can read: "React (Web Dev), Java (Programming)"
-    const skillList = Array.isArray(data.skills) 
-      ? data.skills.map(s => `${s.name} (${s.category || 'Skill'})`).join(", ")
-      : data.skills;
+    // 1. SAFETY CHECK: If no data was sent, don't crash the server
+    if (!data) return res.status(400).json({ error: "No profile data received" });
+
+    // 2. Format skills safely
+    let skillList = "No skills listed";
+    if (data.skills && Array.isArray(data.skills)) {
+      skillList = data.skills.map(s => `${s.name} (${s.category})`).join(", ");
+    } else if (typeof data.skills === 'string') {
+      skillList = data.skills;
+    }
 
     const prompt = `
-      Act as a Career Counselor. Analyze this Student Profile:
-      College: ${data.college}
-      Branch: ${data.branch}
-      CGPA: ${data.cgpa}
+      Analyze this Student Profile:
+      College: ${data.college || "N/A"}
+      Branch: ${data.branch || "N/A"}
       Skills: ${skillList}
-      Interests: ${data.interests}
-      Achievements: ${data.achievements}
-
-      Provide response in JSON:
+      
+      Provide response in STRICT JSON:
       {
-        "internships": "best 3 internship types in bullet points",
-        "skills": "skill gap explanation based on their categories",
-        "roadmap": "3 month roadmap to success"
+        "internships": "Top 3 roles",
+        "skills": "Gap analysis",
+        "roadmap": "3 month plan"
       }
     `;
 
-    // 2. UPDATED ENDPOINT: Use the correct Google Generative AI endpoint
+    // 3. CALL GEMINI (Using the 2.0-flash model we fixed earlier)
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_KEY}`,
-      {
-        contents: [{ parts: [{ text: prompt }] }]
-      }
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_KEY}`,
+      { contents: [{ parts: [{ text: prompt }] }] }
     );
 
-    // 3. SAFE PARSING: Extract the text from Google's response structure
     const aiText = response.data.candidates[0].content.parts[0].text;
-    
-    // Clean JSON formatting from AI response if it includes markdown blocks
     const cleanJson = aiText.replace(/```json|```/g, "").trim();
     
     res.json(JSON.parse(cleanJson));
 
   } catch (err) {
     console.error("AI Error:", err.response?.data || err.message);
-    res.status(500).json({ error: "AI recommendation failed", details: err.message });
+    res.status(500).json({ error: "AI failed to respond" });
   }
 };
+
+
+exports.hasSkillChart = async(req,res)=>{
+  const { email } = req.body;
+
+  const user = await User.findOne({email});
+
+  if(!user) return res.json({exists:false});
+
+  if(user.skillRatings && user.skillRatings.length>0)
+    return res.json({exists:true});
+
+  return res.json({exists:false});
+};
+
+exports.hasSkillChart = async(req,res)=>{
+  const { email } = req.body;
+
+  const user = await User.findOne({email});
+
+  if(!user) return res.json({exists:false});
+
+  if(user.skillRatings && user.skillRatings.length>0)
+    return res.json({exists:true});
+
+  return res.json({exists:false});
+};
+
+exports.getSkillChart = async(req,res)=>{
+  const { email } = req.body;
+
+  const user = await User.findOne({email});
+
+  res.json(user.skillRatings || []);
+};
+
+
