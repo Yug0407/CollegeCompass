@@ -77,7 +77,7 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert("Login Successful 🎉");
-      navigate("/profile");
+      navigate("/dashboard");
 
     }catch(err){
       setError("Server error. Try again.");

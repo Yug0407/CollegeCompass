@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/dashboard.css';
 import Hero from '../components/Hero.jsx';
+import RecommendedInternships from '../components/RecommendedInternships.jsx';
 
 
 export default function Dashboard() {
@@ -56,9 +57,13 @@ export default function Dashboard() {
             {exists ? "View Skill Chart" : "Create Skill Chart"}
           </button> 
         </div>
-
-
       </div>
+
+      {/* Recommended Internships Section */}
+      <div className="mt-16">
+        <RecommendedInternships />
+      </div>
+
     </div>
   </main>
 </div>

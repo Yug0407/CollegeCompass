@@ -52,7 +52,14 @@ const userSchema = new mongoose.Schema({
     skills: String,
     roadmap: String,
     generatedAt: Date
+  },
+  appliedInternships: [
+  {
+    internshipId: String,
+    appliedAt: { type: Date, default: Date.now }
   }
+],
+
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
