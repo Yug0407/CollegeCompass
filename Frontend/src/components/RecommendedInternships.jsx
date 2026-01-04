@@ -88,7 +88,7 @@ export default function RecommendedInternships() {
               </div>
 
               <div className="card-bottom">
-                <button className="view-btn">View Details</button>
+                <button className="view-btn" onClick={() => navigate("/internship/details", { state: job })}>View Details</button>
                 <a href={job.link} target="_blank" className="apply-btn">Apply</a>
               </div>
             </div>

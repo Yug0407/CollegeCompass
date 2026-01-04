@@ -312,3 +312,65 @@
   margin-top: 10px;
   border-radius: 20px;
 }
+
+/* =====INERNSHIP DETAIL PAGE====== */
+.detail-page{
+  padding: 30px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.detail-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+.detail-title{
+  font-size:38px;
+  font-weight:800;
+  margin:10px 0;
+}
+
+.detail-company{
+  color:#666;
+  margin-bottom:6px;
+}
+
+.detail-meta span{
+  margin-right:6px;
+  color:#555;
+}
+
+.detail-logo{
+  width:90px;
+  height:90px;
+  border-radius:15px;
+  background:#fff;
+}
+
+h2{
+  margin-top:25px;
+  font-size:22px;
+}
+
+.bottom-apply-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:white;
+  padding:15px;
+  display:flex;
+  justify-content:center;
+  border-top:1px solid #eee;
+}
+
+.apply-big-btn{
+  background:#2B9AFE;
+  color:white;
+  padding:14px 30px;
+  border-radius:8px;
+  font-size:18px;
+  border:none;
+}

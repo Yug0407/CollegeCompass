@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/internships.css";
 
 export default function AllInternships() {
+    const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,7 +79,7 @@ export default function AllInternships() {
                 </div>
 
                 <div className="card-bottom">
-                  <button className="view-btn">View Details</button>
+                  <button className="view-btn" onClick={() => navigate("/internship/details", { state: job })}>View Details</button>
                   <a href={job.link} target="_blank" className="apply-btn">
                     Apply
                   </a>
